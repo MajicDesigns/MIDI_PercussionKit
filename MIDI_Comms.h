@@ -1,5 +1,7 @@
-// Arduino MIDI comms class
-// Encapsulate all the midi message sending functions and control values
+// Arduino MIDI communications class
+//
+// Encapsulate all the midi percussion message sending 
+// and control values.
 //
 #pragma once
 
@@ -12,25 +14,6 @@ public:
   midiComms(Stream& s) : _S(s) {}
 
   void begin(void) {}
-
-  void midiSend(uint8_t message, uint8_t channel, uint8_t d1, uint8_t d2 = 0)
-    // Send a MIDI message out the serial port
-  {
-    uint8_t msg[3], l = 0;
-
-    msg[l++] = message + channel;
-    msg[l++] = d1;
-    if (message <= 0xb0)
-      msg[l++] = d2;
-
-#if  USE_MIDI  
-    _S.write(msg, l);
-#endif
-
-    PRINTX("\nCh: ", msg[0]);
-    PRINT(" d1: ", msg[1]);
-    PRINT(" d2: ", msg[2]);
-  }
 
   // Define functions for each MIDI message type
   //
@@ -62,6 +45,25 @@ public:
   inline void ctlVolLSB(uint8_t v)     { midiSend(0xb0, PERCUSSION_CHANNEL, 0x27, v); } // volume setting LSB (0-127); }
 
 private:
-  const uint8_t PERCUSSION_CHANNEL = 9; // zero based channel number for percussion (Ch 10)
+  const uint8_t PERCUSSION_CHANNEL = 9; // zero based channel number for GM percussion (Ch 10)
   Stream& _S;   // output stream
+
+  void midiSend(uint8_t message, uint8_t channel, uint8_t d1, uint8_t d2 = 0)
+  // Send a MIDI message out the serial port
+  {
+    uint8_t msg[3], l = 0;
+
+    msg[l++] = message + channel;
+    msg[l++] = d1;
+    if (message <= 0xb0)
+      msg[l++] = d2;
+
+#if  USE_MIDI  
+    _S.write(msg, l);
+#endif
+
+    PRINTX("\nCh: ", msg[0]);
+    PRINT(" d1: ", msg[1]);
+    PRINT(" d2: ", msg[2]);
+  }
 };

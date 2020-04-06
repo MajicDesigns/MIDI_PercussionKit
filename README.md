@@ -1,6 +1,6 @@
 # MIDI Percussion Kit
 
-Arduino sketch to Manage and play MIDI percussion instruments.
+Arduino sketch to manage and play MIDI percussion instruments.
 
 The interface is designed around a piezo sensor, but any digital inputs can be used to trigger the instrument.
 

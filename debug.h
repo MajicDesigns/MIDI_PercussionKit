@@ -1,4 +1,4 @@
-// Debug settings
+// Debug or MIDI output settings
 //
 #pragma once
 
@@ -6,9 +6,9 @@
 #define USE_MIDI 1
 
 #if USE_MIDI
-#define PRINT(s, v)
-#define PRINTX(s, v)
-#define PRINTS(s)
+#define PRINT(s, v)   {}
+#define PRINTX(s, v)  {}
+#define PRINTS(s)     {}
 
 #define SERIAL_RATE 31250
 #else
